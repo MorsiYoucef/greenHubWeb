@@ -1,5 +1,5 @@
 "use client"
-import * as React from 'react'
+import React ,{useState,useEffect} from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -22,6 +22,7 @@ function Copyright(props: any) {
       color="text.secondary"
       align="center"
       {...props}
+      sx={{padding:5}}
     >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
@@ -46,14 +47,18 @@ const defaultTheme = createTheme({
 })
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
-  }
+    const [firstName, setFirstName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      console.log({ firstName, email, password })
+    }
+
+  
+
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -92,8 +97,9 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
+                  onChange={(e)=>setFirstName(e.target.value)}
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -103,18 +109,9 @@ export default function SignUp() {
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={(e)=>setEmail(e.target.value)}
                   required
                   fullWidth
                   id="email"
@@ -125,6 +122,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  onChange={(e)=>setPassword(e.target.value)}
                   required
                   fullWidth
                   name="password"
