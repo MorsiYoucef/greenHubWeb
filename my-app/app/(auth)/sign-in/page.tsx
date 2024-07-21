@@ -16,12 +16,7 @@ import Image from 'next/image'
 
 function Copyright(props: any) {
   return (
-    <Typography
-      variant="body2"
-      color="primary.main"
-      align="center"
-      {...props}
-    >
+    <Typography variant="body2" color="primary.main" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Your Website
@@ -56,16 +51,15 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container sx={{display:'flex', justifyContent:'space-between', flexDirection:'column',minHeight:'100vh'}} component="main" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Image src={require('./../../../public/WithoutTopWithoutBack.png')} alt="logo" />
+      <Container
+        component="main"
+        maxWidth="xs"
+      >
+        <Box>
+          <Image
+            src={require('./../../../public/WithoutTopWithoutBack.png')}
+            alt="logo"
+          />
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
