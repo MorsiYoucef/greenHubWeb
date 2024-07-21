@@ -188,7 +188,6 @@ function OTP({
 export default function OTPInput({value}:{value: string  }) {
   const [otp, setOtp] = React.useState('')
 //   const router = useRouter()
-  const [message, setMessage] = React.useState('')
   const [mounted, setMounted] = React.useState(false)
 
    React.useEffect(() => {
