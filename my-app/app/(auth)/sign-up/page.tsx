@@ -79,23 +79,6 @@ export default function SignUp() {
     }
   }
 
-  // const handleVerifyOtp = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       'http://localhost:8042/users/verify-code',
-  //       {
-  //         email,
-  //         code: otp,
-  //       }
-  //     )
-  //     console.log(response.data)
-  //     // Redirect to home page upon successful verification
-  //     router.push('/')
-  //   } catch (error) {
-  //     console.log('Error verifying OTP', error)
-  //   }
-  // }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">

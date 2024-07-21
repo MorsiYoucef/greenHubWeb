@@ -2,9 +2,10 @@
 import * as React from 'react'
 import { Input as BaseInput } from '@mui/base/Input'
 import { Box, styled } from '@mui/system'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import axios from 'axios'
 import { Button } from '@mui/material'
+import { redirect } from 'next/navigation'
 
 function OTP({
   separator,
@@ -186,26 +187,35 @@ function OTP({
 
 export default function OTPInput({value}:{value: string  }) {
   const [otp, setOtp] = React.useState('')
-  const router = useRouter()
+//   const router = useRouter()
+  const [message, setMessage] = React.useState('')
+  const [mounted, setMounted] = React.useState(false)
 
+   React.useEffect(() => {
+     setMounted(true)
+   }, [])
 
-  const handleVerifyOtp = async () => {
-    try {
-      const response = await axios.post(
-        'http://localhost:8042/users/verify-code',
-        {
-          value,
-          code: otp,
-        }
-      )
-      console.log(response.data)
-      // Redirect to home page upon successful verification
-      router.push('/')
-    } catch (error) {
-      console.log('Error verifying OTP', error)
-    }
-  }
+   const handleVerifyOtp = async () => {
+     try {
+       const response = await axios.post(
+         'http://localhost:8042/users/verify-code',
+         { email: value,code: otp }
+       )
+       console.log(response.data)
+       if (response.status === 200) {
+         redirect('/Home')// Redirect after successful OTP verification
+       }else{
+        console.log('Error verifying OTP-1')
 
+       }
+     } catch (error) {
+       console.log('Error verifying OTP',error)
+     }
+   }
+
+   if (!mounted) {
+     return null // Avoid rendering until the component has mounted
+   }
  
 
   return (
