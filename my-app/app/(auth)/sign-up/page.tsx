@@ -16,6 +16,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Image from 'next/image'
 import axios from 'axios'
 import OTPInput from '@/components/UI/OTP'
+import { useRouter } from 'next/navigation'
+import { GoogleLogin } from 'react-google-login'
 
 function Copyright(props: any) {
   return (
@@ -62,6 +64,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [otp, setOtp] = React.useState('')
+  
   
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

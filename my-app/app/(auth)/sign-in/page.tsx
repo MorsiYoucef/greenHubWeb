@@ -13,6 +13,14 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Image from 'next/image'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import toast, { Toaster } from 'react-hot-toast'
+import {
+  GoogleLogin,
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from 'react-google-login'
 
 function Copyright(props: any) {
   return (
@@ -40,21 +48,54 @@ const defaultTheme = createTheme({
 })
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter()
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    })
+    const email = data.get('email')
+    const password = data.get('password')
+
+    try {
+      const response = await axios.post('http://localhost:8042/users/login', {
+        email,
+        password,
+      })
+      console.log(response.data)
+      router.push('/Home')
+      toast.success('Successfully toasted!')
+    } catch (error) {
+      console.error('Error signing in', error)
+      // Handle sign-in error (e.g., show error message)
+    }
+  }
+
+  const handleGoogleSuccess = async (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    if ('tokenId' in response) {
+      const token = response.tokenId
+      try {
+        const res = await axios.post(
+          'http://localhost:8042/users/google-login',
+          {
+            token,
+          }
+        )
+        console.log(res.data)
+        // Handle successful login
+      } catch (error) {
+        console.log('Error logging in with Google', error)
+      }
+    }
+  }
+
+  const handleGoogleFailure = (error: any) => {
+    console.log('Google Sign-In failed', error)
   }
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container
-        component="main"
-        maxWidth="xs"
-      >
+      <Container component="main" maxWidth="xs">
         <Box>
           <Image
             src={require('./../../../public/WithoutTopWithoutBack.png')}
@@ -133,7 +174,15 @@ export default function SignIn() {
               </Grid>
             </Grid>
           </Box>
+          <GoogleLogin
+            clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={handleGoogleSuccess}
+            onFailure={handleGoogleFailure}
+            cookiePolicy={'single_host_origin'}
+          />
         </Box>
+        <Toaster />
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

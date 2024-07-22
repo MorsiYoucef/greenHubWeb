@@ -5,7 +5,7 @@ import { Box, styled } from '@mui/system'
 // import { useRouter } from 'next/router'
 import axios from 'axios'
 import { Button } from '@mui/material'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 function OTP({
   separator,
@@ -187,7 +187,8 @@ function OTP({
 
 export default function OTPInput({value}:{value: string  }) {
   const [otp, setOtp] = React.useState('')
-//   const router = useRouter()
+const router = useRouter()
+
   const [mounted, setMounted] = React.useState(false)
 
    React.useEffect(() => {
@@ -202,7 +203,7 @@ export default function OTPInput({value}:{value: string  }) {
        )
        console.log(response.data)
        if (response.status === 200) {
-         redirect('/Home')// Redirect after successful OTP verification
+         router.push('/Home')// Redirect after successful OTP verification
        }else{
         console.log('Error verifying OTP-1')
 
