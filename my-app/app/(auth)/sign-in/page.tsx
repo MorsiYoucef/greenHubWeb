@@ -61,7 +61,6 @@ export default function SignIn() {
         password,
       })
       console.log(response.data)
-      // localStorage.setItem('user', JSON.stringify(response.data))
       router.push('/Home')
       toast.success('Successfully toasted!')
     } catch (error) {

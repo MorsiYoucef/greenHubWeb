@@ -202,6 +202,7 @@ const router = useRouter()
          { email: value,code: otp }
        )
        console.log(response.data)
+       console.log(response.headers)
        if (response.status === 200) {
          router.push('/Home')// Redirect after successful OTP verification
        }else{
